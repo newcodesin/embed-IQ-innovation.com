@@ -592,5 +592,93 @@
   <script src="script.js"></script>
 </body>
 </html>
+<!-- ...[keep all HTML above unchanged]... -->
+
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <div class="container">
+      <header class="section-header">
+        <h2>Contact us</h2>
+        <p>Have a project in mind? Let’s talk.</p>
+      </header>
+      <!-- Updated form: uses Formspree to send to your email -->
+      <form class="contact-form" id="contactForm"
+        action="https://formspree.io/f/xnnbknkl"
+        method="POST"
+        novalidate>
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required>
+            <span class="error" aria-live="polite"></span>
+          </div>
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required>
+            <span class="error" aria-live="polite"></span>
+          </div>
+          <div class="form-field">
+            <label for="subject">Subject</label>
+            <input id="subject" name="subject" type="text" placeholder="How can we help?" required>
+            <span class="error" aria-live="polite"></span>
+          </div>
+          <div class="form-field form-field-full">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="6" placeholder="Describe your project or question..." required></textarea>
+            <span class="error" aria-live="polite"></span>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Send message</button>
+          <p class="form-note">We’ll get back within 1–2 business days.</p>
+        </div>
+        <!-- Feedback message -->
+        <div id="formResult" style="display:none; margin-top:1em;"></div>
+      </form>
+    </div>
+  </section>
+
+<!-- ...[keep all HTML below unchanged]... -->
+
+<script>
+  // Simple feedback for the user after submission
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('contactForm');
+    const result = document.getElementById('formResult');
+    if(form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const data = new FormData(form);
+        fetch(form.action, {
+          method: "POST",
+          body: data,
+          headers: {
+            'Accept': 'application/json'
+          }
+        }).then(response => {
+          if (response.ok) {
+            result.style.display = "block";
+            result.innerHTML = "<span style='color:green;'>Thank you! Your message has been sent.</span>";
+            form.reset();
+          } else {
+            response.json().then(data => {
+              result.style.display = "block";
+              if (Object.hasOwn(data, 'errors')) {
+                result.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+              } else {
+                result.innerHTML = "<span style='color:red;'>Oops! There was a problem submitting your form.</span>";
+              }
+            });
+          }
+        }).catch(error => {
+          result.style.display = "block";
+          result.innerHTML = "<span style='color:red;'>Oops! There was a problem submitting your form.</span>";
+        });
+      });
+    }
+  });
+</script>
+
+<!-- ...[rest of your code]... -->
 
 
