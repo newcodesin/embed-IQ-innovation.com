@@ -503,104 +503,6 @@
         <h2>Contact us</h2>
         <p>Have a project in mind? Let’s talk.</p>
       </header>
-      <form class="contact-form" id="contactForm" novalidate>
-        <div class="form-grid">
-          <div class="form-field">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" placeholder="Your name" required>
-            <span class="error" aria-live="polite"></span>
-          </div>
-          <div class="form-field">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="you@example.com" required>
-            <span class="error" aria-live="polite"></span>
-          </div>
-          <div class="form-field">
-            <label for="subject">Subject</label>
-            <input id="subject" name="subject" type="text" placeholder="How can we help?" required>
-            <span class="error" aria-live="polite"></span>
-          </div>
-          <div class="form-field form-field-full">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="6" placeholder="Describe your project or question..." required></textarea>
-            <span class="error" aria-live="polite"></span>
-          </div>
-        </div>
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Send message</button>
-          <p class="form-note">We’ll get back within 1–2 business days.</p>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <!-- Lightbox Modal -->
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Project image viewer">
-    <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
-    <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Previous image">←</button>
-    <img id="lightboxImg" alt="">
-    <button class="lightbox-nav next" id="lightboxNext" aria-label="Next image">→</button>
-  </div>
-
-  <!-- Back to top -->
-  <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <div class="brand-mini">
-          <span class="brand-logo" aria-hidden="true"></span>
-          <span><strong>EMBED IQ</strong></span>
-        </div>
-        <p>Embedded systems, digital circuits, CAD, mechanical design, testing, and soldering—delivered with care.</p>
-      </div>
-      <div>
-        <h4>Company</h4>
-        <ul class="footer-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Services</h4>
-        <ul class="footer-links">
-          <li><a href="#services">Embedded Projects</a></li>
-          <li><a href="#services">Digital Circuit Design</a></li>
-          <li><a href="#services">CAD Works (Electrical)</a></li>
-          <li><a href="#services">Mechanical Design CAD</a></li>
-          <li><a href="#services">Testing & Validation</a></li>
-          <li><a href="#services">Soldering & Assembly</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Follow</h4>
-        <ul class="footer-links">
-          <li><a href="#" aria-label="LinkedIn">LinkedIn</a></li>
-          <li><a href="#" aria-label="YouTube">YouTube</a></li>
-          <li><a href="#" aria-label="GitHub">GitHub</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© <span id="year"></span> EMBED IQ INNOVATION PRIVATE LIMITED. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
-<!-- ...[keep all HTML above unchanged]... -->
-
-  <!-- Contact -->
-  <section id="contact" class="section">
-    <div class="container">
-      <header class="section-header">
-        <h2>Contact us</h2>
-        <p>Have a project in mind? Let’s talk.</p>
-      </header>
       <!-- Updated form: uses Formspree to send to your email -->
       <form class="contact-form" id="contactForm"
         action="https://formspree.io/f/xnnbknkl"
@@ -680,5 +582,68 @@
 </script>
 
 <!-- ...[rest of your code]... -->
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Project image viewer">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+    <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Previous image">←</button>
+    <img id="lightboxImg" alt="">
+    <button class="lightbox-nav next" id="lightboxNext" aria-label="Next image">→</button>
+  </div>
+
+  <!-- Back to top -->
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="brand-mini">
+          <span class="brand-logo" aria-hidden="true"></span>
+          <span><strong>EMBED IQ</strong></span>
+        </div>
+        <p>Embedded systems, digital circuits, CAD, mechanical design, testing, and soldering—delivered with care.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul class="footer-links">
+          <li><a href="#services">Embedded Projects</a></li>
+          <li><a href="#services">Digital Circuit Design</a></li>
+          <li><a href="#services">CAD Works (Electrical)</a></li>
+          <li><a href="#services">Mechanical Design CAD</a></li>
+          <li><a href="#services">Testing & Validation</a></li>
+          <li><a href="#services">Soldering & Assembly</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Follow</h4>
+        <ul class="footer-links">
+          <li><a href="#" aria-label="LinkedIn">LinkedIn</a></li>
+          <li><a href="#" aria-label="YouTube">YouTube</a></li>
+          <li><a href="#" aria-label="GitHub">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year"></span> EMBED IQ INNOVATION PRIVATE LIMITED. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+<!-- ...[keep all HTML above unchanged]... -->
+
+
+
 
 
