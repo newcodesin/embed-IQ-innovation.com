@@ -1,605 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#4f46e5" />
-  <title>EMBED IQ INNOVATION</title>
-  <meta name="description" content="Embedded projects, digital circuit design, CAD (electrical & mechanical), testing & validation, soldering and assembly services." />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='24' fill='%234f46e5'/%3E%3Cg fill='white'%3E%3Cpath d='M26 42h16v44H26zM54 30h18v68H54zM84 46h18v36H84z'/%3E%3Ccircle cx='34' cy='90' r='4'/%3E%3Ccircle cx='63' cy='90' r='4'/%3E%3Ccircle cx='93' cy='90' r='4'/%3E%3C/g%3E%3C/svg%3E" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number & Aadhaar Lookup</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    scroll-behavior: smooth;
+}
+.container {
+    max-width: 550px;
+    margin: 50px auto;
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+.toggle-btn {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.toggle-btn button {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    background: #e0e0e0;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 10px;
+    margin: 0 5px;
+    transition: 0.3s;
+}
+.toggle-btn button.active {
+    background: #007bff;
+    color: #fff;
+}
+.field {
+    position: relative;
+    margin-bottom: 20px;
+}
+.field input {
+    width: 100%;
+    padding: 15px 45px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+.field input:focus {
+    border-color: #007bff;
+}
+.field i {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #007bff;
+}
+button.search-btn {
+    width: 100%;
+    padding: 15px;
+    background: #007bff;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+button.search-btn:hover {
+    background: #0056b3;
+}
+#output {
+    margin-top: 20px;
+}
+.result-card, .error-card {
+    background: #e9f5ff;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    animation: fadeIn 0.5s ease forwards;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    overflow: hidden;
+    word-wrap: break-word;
+}
+.error-card {
+    background: #ffe9e9;
+    color: #d8000c;
+}
+.result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.result-card p {
+    margin: 8px 0;
+    line-height: 1.4;
+}
+.result-card i {
+    color: #007bff;
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+@keyframes fadeIn {
+    0% {opacity: 0; transform: translateY(10px);}
+    100% {opacity: 1; transform: translateY(0);}
+}
+.loading {
+    text-align: center;
+    font-size: 24px;
+    color: #007bff;
+    margin-top: 20px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}
+#toTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: 0.3s;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+#toTop:hover {
+    background: #0056b3;
+    transform: scale(1.1);
+}
+
+/* --- Warning Section --- */
+.warning-box {
+    background: #fff3cd;
+    border-left: 6px solid #ffcc00;
+    color: #856404;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-top: 25px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.warning-box i {
+    margin-right: 8px;
+    color: #d39e00;
+}
+
+/* --- Signature Section --- */
+.signature {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-top: 20px;
+    font-style: italic;
+}
+.signature i {
+    color: #007bff;
+    margin-right: 5px;
+}
+
+@media (max-width: 600px) {
+    .container { 
+        margin: 20px; 
+        padding: 20px; 
+    }
+    .field input { 
+        padding: 12px 40px; 
+    }
+    #toTop {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+}
+</style>
 </head>
 <body>
-  <!-- Header / Navbar -->
-  <header class="site-header" id="top">
-    <div class="container nav-wrap">
-      <a href="#" class="brand" aria-label="EMBED IQ Innovation Private Limited - Home">
-        <span class="brand-logo" aria-hidden="true">
-          <!-- Simple inline SVG logo -->
-          <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" aria-label="Brand logo">
-  <defs>
-    <radialGradient id="chipGlow" cx="50%" cy="50%" r="60%" fx="50%" fy="50%">
-      <stop offset="0%" stop-color="#0ff" stop-opacity="0.7"/>
-      <stop offset="100%" stop-color="#4f46e5" stop-opacity="0.9"/>
-    </radialGradient>
-    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00cfff"/>
-      <stop offset="100%" stop-color="#4f46e5"/>
-    </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0ff" flood-opacity="0.35"/>
-    </filter>
-  </defs>
-  <!-- Chip Outer Frame -->
-  <rect x="16" y="16" width="96" height="96" rx="16" fill="url(#frameGrad)" filter="url(#shadow)" />
-  <!-- Pins -->
-  <g stroke="#00cfff" stroke-width="4">
-    <line x1="64" y1="8" x2="64" y2="24"/>
-    <line x1="64" y1="104" x2="64" y2="120"/>
-    <line x1="8" y1="64" x2="24" y2="64"/>
-    <line x1="104" y1="64" x2="120" y2="64"/>
-    <!-- Top pins -->
-    <line x1="36" y1="12" x2="36" y2="28"/>
-    <line x1="92" y1="12" x2="92" y2="28"/>
-    <line x1="28" y1="24" x2="28" y2="40"/>
-    <line x1="100" y1="24" x2="100" y2="40"/>
-    <!-- Bottom pins -->
-    <line x1="36" y1="116" x2="36" y2="100"/>
-    <line x1="92" y1="116" x2="92" y2="100"/>
-    <line x1="28" y1="104" x2="28" y2="88"/>
-    <line x1="100" y1="104" x2="100" y2="88"/>
-    <!-- Left pins -->
-    <line x1="12" y1="36" x2="28" y2="36"/>
-    <line x1="12" y1="92" x2="28" y2="92"/>
-    <line x1="24" y1="28" x2="40" y2="28"/>
-    <line x1="24" y1="100" x2="40" y2="100"/>
-    <!-- Right pins -->
-    <line x1="116" y1="36" x2="100" y2="36"/>
-    <line x1="116" y1="92" x2="100" y2="92"/>
-    <line x1="104" y1="28" x2="88" y2="28"/>
-    <line x1="104" y1="100" x2="88" y2="100"/>
-  </g>
-  <!-- Chip Inner Panel -->
-  <rect x="32" y="32" width="64" height="64" rx="8" fill="url(#chipGlow)" />
-  <!-- Circuit Trace -->
-  <path d="M40,48 h40 v16 l-16,0 v16 h-16 v-32 z" stroke="#fff" stroke-width="3.2" fill="none" />
-  <circle cx="40" cy="48" r="4" fill="#00cfff"/>
-  <circle cx="80" cy="64" r="4" fill="#00cfff"/>
-  <circle cx="56" cy="80" r="4" fill="#00cfff"/>
-  <!-- EIQ Text -->
-  <text x="50%" y="62%" text-anchor="middle" dominant-baseline="middle" font-family="Arial, 'Inter', sans-serif" font-size="28" font-weight="bold" fill="#cbf7ff" stroke="#1854b2" stroke-width="1.5" paint-order="stroke">
-    EIQ
-  </text>
-</svg>
-        </span>
-        <span class="brand-text">
-          <strong>EMBED IQ</strong> Innovations.
-        </span>
-      </a>
-
-      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="primaryNav" aria-label="Open menu">
-        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-      </button>
-
-      <nav id="primaryNav" class="nav">
-        <ul class="nav-list">
-          <li><a href="#home" class="nav-link">Home</a></li>
-
-          <li class="has-dropdown">
-            <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">Services</button>
-            <ul class="dropdown">
-              <li><a href="#services" class="dropdown-link">Embedded Projects</a></li>
-              <li><a href="#services" class="dropdown-link">Digital Circuit Design</a></li>
-              <li><a href="#services" class="dropdown-link">CAD Works (Electrical)</a></li>
-              <li><a href="#services" class="dropdown-link">Mechanical Design CAD</a></li>
-              <li><a href="#services" class="dropdown-link">Testing & Validation</a></li>
-              <li><a href="#services" class="dropdown-link">Soldering & Assembly</a></li>
-            </ul>
-          </li>
-
-          <li class="has-dropdown">
-            <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">Projects</button>
-            <ul class="dropdown">
-              <li><a href="#projects" class="dropdown-link" data-filter="all">All</a></li>
-              <li><a href="#projects" class="dropdown-link" data-filter="embedded">Embedded</a></li>
-              <li><a href="#projects" class="dropdown-link" data-filter="digital">Digital</a></li>
-              <li><a href="#projects" class="dropdown-link" data-filter="cad">CAD</a></li>
-              <li><a href="#projects" class="dropdown-link" data-filter="mechanical">Mechanical</a></li>
-              <li><a href="#projects" class="dropdown-link" data-filter="testing">Testing</a></li>
-              <li><a href="#projects" class="dropdown-link" data-filter="assembly">Assembly</a></li>
-            </ul>
-          </li>
-
-          <li><a href="#about" class="nav-link">About</a></li>
-          <li><a href="#contact" class="nav-link">Contact</a></li>
-
-          <li class="nav-search">
-            <form id="searchForm" role="search" aria-label="Search projects">
-              <input id="searchInput" type="search" placeholder="Search projects..." aria-label="Search projects" />
-              <button type="submit" aria-label="Search">
-                <span class="icon-search" aria-hidden="true">🔎</span>
-              </button>
-            </form>
-          </li>
-        </ul>
-      </nav>
+<div class="container" id="top">
+    <h1>Number & Aadhaar Lookup</h1>
+    <div class="toggle-btn">
+        <button id="mobileBtn" class="active" onclick="toggleInput('mobile')"><i class="fa-solid fa-phone"></i> Mobile</button>
+        <button id="aadhaarBtn" onclick="toggleInput('aadhaar')"><i class="fa-solid fa-id-card"></i> Aadhaar</button>
     </div>
-  </header>
-
-  <!-- Hero -->
-  <section id="home" class="hero section">
-    <div class="container hero-inner">
-      <div class="hero-text">
-        <h1>We turn ideas into intelligent products</h1>
-        <p>Embedded systems, digital circuits, CAD, mechanical design, testing, and soldering—crafted end-to-end for speed and reliability.</p>
-        <div class="hero-actions">
-          <a href="#projects" class="btn btn-primary">Explore Projects</a>
-          <a href="#contact" class="btn btn-ghost">Get in Touch</a>
-        </div>
-      </div>
-      <div class="hero-visual" aria-hidden="true">
-        <div class="chip"></div>
-        <div class="trace trace-1"></div>
-        <div class="trace trace-2"></div>
-        <div class="trace trace-3"></div>
-      </div>
+    <div class="field" id="mobileField">
+        <i class="fa-solid fa-phone"></i>
+        <input type="tel" id="mobile" placeholder="Enter 10-digit Mobile Number" maxlength="10">
     </div>
-    <div class="hero-bg"></div>
-  </section>
-
-  <!-- Services -->
-  <section id="services" class="section">
-    <div class="container">
-      <header class="section-header">
-        <h2>Our services</h2>
-        <p>From schematic to shipment: design, build, test, and deliver.</p>
-      </header>
-
-      <div class="cards services-grid">
-        <article class="card service">
-          <img src="assets/images/services/svc-embedded.jpg" alt="Embedded systems development" loading="lazy">
-          <div class="card-body">
-            <h3>Embedded Projects</h3>
-            <p>MCUs, RTOS, drivers, protocol stacks, and production-grade firmware.</p>
-          </div>
-        </article>
-
-        <article class="card service">
-          <img src="assets/images/services/svc-digital.jpg" alt="Digital circuit design and logic" loading="lazy">
-          <div class="card-body">
-            <h3>Digital Circuit Design</h3>
-            <p>RTL, FPGA/CPLD, timing closure, and board-level integration.</p>
-          </div>
-        </article>
-
-        <article class="card service">
-          <img src="assets/images/services/svc-cad-elec.jpg" alt="Electrical CAD schematics and layout" loading="lazy">
-          <div class="card-body">
-            <h3>CAD Works (Electrical)</h3>
-            <p>Schematics, PCB layout, DFM/DFT, and documentation.</p>
-          </div>
-        </article>
-
-        <article class="card service">
-          <img src="assets/images/services/svc-cad-mech.jpg" alt="Mechanical design CAD" loading="lazy">
-          <div class="card-body">
-            <h3>Mechanical Design CAD</h3>
-            <p>Enclosures, mechanisms, GD&T, and manufacturing drawings.</p>
-          </div>
-        </article>
-
-        <article class="card service">
-          <img src="assets/images/services/svc-testing.jpg" alt="Hardware testing and validation" loading="lazy">
-          <div class="card-body">
-            <h3>Testing & Validation</h3>
-            <p>Bring-up, verification, compliance, and reliability tests.</p>
-          </div>
-        </article>
-
-        <article class="card service">
-          <img src="assets/images/services/svc-soldering.jpg" alt="Soldering and assembly services" loading="lazy">
-          <div class="card-body">
-            <h3>Soldering & Assembly</h3>
-            <p>Prototyping, component mounting, and small-batch builds.</p>
-          </div>
-        </article>
-      </div>
-  </section>
-
-  <!-- Projects Gallery -->
-  <section id="projects" class="section section-alt">
-    <div class="container">
-      <header class="section-header">
-        <h2>Projects</h2>
-        <p>Browse 25 highlights across embedded, digital, CAD, mechanical, testing, and assembly.</p>
-      </header>
-
-      <div class="filter-hint">Tip: Use the top search or dropdown filters to narrow results.</div>
-
-      <div class="gallery-grid" id="gallery">
-        <!-- 48 project cards (images should be added to assets/images/projects/) -->
-        <!-- Categories cycle: embedded, digital, cad, mechanical, testing, assembly -->
-
-        <!-- 1–8 -->
-        <figure class="project-card" data-category="embedded">
-          <img src="assets/images/projects/project-01.jpg" alt="ARM-based power monitor" loading="lazy">
-          <figcaption>
-            <h3>ARM-based Power Monitor</h3>
-            <p class="tags"><span>Embedded</span> <span>IoT</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="digital">
-          <img src="assets/images/projects/project-02.jpg" alt="FPGA image pipeline" loading="lazy">
-          <figcaption>
-            <h3>FPGA Image Pipeline</h3>
-            <p class="tags"><span>Digital</span> <span>FPGA</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="cad">
-          <img src="assets/images/projects/project-03.jpg" alt="4-layer PCB RF module" loading="lazy">
-          <figcaption>
-            <h3>4-layer PCB RF Module</h3>
-            <p class="tags"><span>CAD</span> <span>PCB</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="mechanical">
-          <img src="assets/images/projects/project-04.jpg" alt="Aluminum enclosure design" loading="lazy">
-          <figcaption>
-            <h3>Aluminum Enclosure Design</h3>
-            <p class="tags"><span>Mechanical</span> <span>CAD</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="testing">
-          <img src="assets/images/projects/project-05.jpg" alt="EMI/EMC pre-compliance test" loading="lazy">
-          <figcaption>
-            <h3>EMI/EMC Pre-Compliance</h3>
-            <p class="tags"><span>Testing</span> <span>Validation</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="assembly">
-          <img src="assets/images/projects/project-06.jpg" alt="Fine-pitch soldering assembly" loading="lazy">
-          <figcaption>
-            <h3>Fine-pitch Soldering</h3>
-            <p class="tags"><span>Assembly</span> <span>SMD</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="embedded">
-          <img src="assets/images/projects/project-07.jpg" alt="Battery management firmware" loading="lazy">
-          <figcaption>
-            <h3>BMS Firmware</h3>
-            <p class="tags"><span>Embedded</span> <span>EV</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="digital">
-          <img src="assets/images/projects/project-08.jpg" alt="High-speed LVDS interface" loading="lazy">
-          <figcaption>
-            <h3>High-speed LVDS</h3>
-            <p class="tags"><span>Digital</span> <span>Signal</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <!-- 9–16 -->
-        <figure class="project-card" data-category="cad">
-          <img src="assets/images/projects/project-09.jpg" alt="DDR4 routing PCB" loading="lazy">
-          <figcaption>
-            <h3>DDR4 Routing PCB</h3>
-            <p class="tags"><span>CAD</span> <span>PCB</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="mechanical">
-          <img src="assets/images/projects/project-10.jpg" alt="Heatsink optimization" loading="lazy">
-          <figcaption>
-            <h3>Heatsink Optimization</h3>
-            <p class="tags"><span>Mechanical</span> <span>Thermal</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="testing">
-          <img src="assets/images/projects/project-11.jpg" alt="Hardware-in-the-loop testing" loading="lazy">
-          <figcaption>
-            <h3>HIL Testing</h3>
-            <p class="tags"><span>Testing</span> <span>Automation</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="assembly">
-          <img src="assets/images/projects/project-12.jpg" alt="Through-hole assembly line" loading="lazy">
-          <figcaption>
-            <h3>TH Assembly Line</h3>
-            <p class="tags"><span>Assembly</span> <span>Production</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="embedded">
-          <img src="assets/images/projects/project-13.jpg" alt="LoRa telemetry node" loading="lazy">
-          <figcaption>
-            <h3>LoRa Telemetry</h3>
-            <p class="tags"><span>Embedded</span> <span>IoT</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="digital">
-          <img src="assets/images/projects/project-14.jpg" alt="DSP audio processing" loading="lazy">
-          <figcaption>
-            <h3>DSP Audio</h3>
-            <p class="tags"><span>Digital</span> <span>DSP</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="cad">
-          <img src="assets/images/projects/project-15.jpg" alt="High-density connector footprinting" loading="lazy">
-          <figcaption>
-            <h3>HD Connector Footprints</h3>
-            <p class="tags"><span>CAD</span> <span>Library</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="mechanical">
-          <img src="assets/images/projects/project-16.jpg" alt="Snap-fit enclosure modeling" loading="lazy">
-          <figcaption>
-            <h3>Snap-fit Enclosures</h3>
-            <p class="tags"><span>Mechanical</span> <span>Design</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <!-- 17–24 -->
-        <figure class="project-card" data-category="testing">
-          <img src="assets/images/projects/project-17.jpg" alt="Boundary scan validation" loading="lazy">
-          <figcaption>
-            <h3>Boundary Scan</h3>
-            <p class="tags"><span>Testing</span> <span>JTAG</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="assembly">
-          <img src="assets/images/projects/project-18.jpg" alt="Reflow profiling" loading="lazy">
-          <figcaption>
-            <h3>Reflow Profiling</h3>
-            <p class="tags"><span>Assembly</span> <span>SMT</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="embedded">
-          <img src="assets/images/projects/project-19.jpg" alt="CAN bus data logger" loading="lazy">
-          <figcaption>
-            <h3>CAN Bus Logger</h3>
-            <p class="tags"><span>Embedded</span> <span>Automotive</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="digital">
-          <img src="assets/images/projects/project-20.jpg" alt="HDMI signal conditioning" loading="lazy">
-          <figcaption>
-            <h3>HDMI Conditioning</h3>
-            <p class="tags"><span>Digital</span> <span>Signal</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="cad">
-          <img src="assets/images/projects/project-21.jpg" alt="Impedance-controlled stackup" loading="lazy">
-          <figcaption>
-            <h3>Controlled Impedance</h3>
-            <p class="tags"><span>CAD</span> <span>Stackup</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="mechanical">
-          <img src="assets/images/projects/project-22.jpg" alt="Vibration test fixture" loading="lazy">
-          <figcaption>
-            <h3>Vibration Fixtures</h3>
-            <p class="tags"><span>Mechanical</span> <span>Test</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="testing">
-          <img src="assets/images/projects/project-23.jpg" alt="Power integrity analysis" loading="lazy">
-          <figcaption>
-            <h3>Power Integrity</h3>
-            <p class="tags"><span>Testing</span> <span>PI</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <figure class="project-card" data-category="assembly">
-          <img src="assets/images/projects/project-24.jpg" alt="BGA rework" loading="lazy">
-          <figcaption>
-            <h3>BGA Rework</h3>
-            <p class="tags"><span>Assembly</span> <span>Rework</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-
-        <!-- 25–32 -->
-        
-            <h3>Selective Solder Fixture</h3>
-            <p class="tags"><span>Assembly</span> <span>Fixture</span></p>
-            <button class="btn btn-sm btn-view" data-lightbox>View</button>
-          </figcaption>
-        </figure>
-      </div>
+    <div class="field" id="aadhaarField" style="display:none">
+        <i class="fa-solid fa-id-card"></i>
+        <input type="tel" id="aadhaar" placeholder="Enter 12-digit Aadhaar Number" maxlength="12">
     </div>
-  </section>
+    <button class="search-btn" onclick="search()">Search</button>
+    <div id="output"></div>
 
-  <!-- Why Us -->
-  <section class="section">
-    <div class="container">
-      <header class="section-header">
-        <h2>Why choose us</h2>
-        <p>We blend engineering rigor with rapid iteration to deliver reliable hardware.</p>
-      </header>
+    <!-- Warning Section -->
+    <div class="warning-box">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <strong>Important Notice:</strong><br>
+        This tool is intended strictly for *educational and demo purposes* only.  
+        Do not use this for any illegal, unethical, or unauthorized activity.  
+        Misuse of personal data may be punishable under Indian IT Act, 2000 and related privacy laws.
+    </div>
 
-      <div class="why-grid">
-        <div class="why-card">
-          <h3>End-to-end</h3>
-          <p>Concept to production—one accountable team.</p>
-        </div>
-        <div class="why-card">
-          <h3>Quality-first</h3>
-          <p>DFM/DFT, test coverage, and traceability baked in.</p>
-        </div>
-        <div class="why-card">
-          <h3>Faster delivery</h3>
-          <p>Short sprints, clear milestones, and continuous feedback.</p>
-        </div>
-        <div class="why-card">
-          <h3>Transparent</h3>
-          <p>Open communication, crisp documentation, and demos.</p>
-        </div>
-      </div>
+    <!-- Signature -->
+    <div class="signature">
+        <i class="fa-solid fa-code"></i> Made by <strong>Nithish</strong>
     </div>
-  </section>
+</div>
 
-  <!-- About -->
-  <section id="about" class="section section-alt">
-    <div class="container about-grid">
-      <div>
-        <header class="section-header">
-          <h2>About EMBED IQ Innovation Pvt. Ltd.</h2>
-          <p>We design and build embedded products, digital logic, and robust hardware that scale.</p>
-        </header>
-        <ul class="checklist">
-          <li>Embedded firmware with robust drivers and RTOS</li>
-          <li>Digital design on FPGA/CPLD and high-speed interfaces</li>
-          <li>Electrical & mechanical CAD with DFM/DFT</li>
-          <li>Testing, validation, and compliance readiness</li>
-          <li>Soldering, rework, and low-volume assembly</li>
-        </ul>
-      </div>
-      <aside class="stats">
-        <div class="stat">
-          <div class="stat-value">50+</div>
-          <div class="stat-label">Highlighted projects</div>
-        
-        <div class="stat">
-          <div class="stat-value">99%</div>
-          <div class="stat-label">On-time delivery</div>
-        </div>
-      </aside>
-    </div>
-  </section>
+<button id="toTop" onclick="scrollToTop()"><i class="fa-solid fa-arrow-up"></i></button>
 
-  <!-- Contact -->
- <form class="contact-form" id="contact" action="https://formspree.io/f/mblavyyk" method="POST">
-  <div class="form-grid">
-    <div class="form-field">
-      <label for="name">Name</label>
-      <input id="name" name="name" type="text" placeholder="Your name" required>
-      <span class="error" aria-live="polite"></span>
-    </div>
-    <div class="form-field">
-      <label for="email">Email</label>
-      <input id="email" name="email" type="email" placeholder="you@example.com" required>
-      <span class="error" aria-live="polite"></span>
-    </div>
-    <div class="form-field">
-      <label for="subject">Subject</label>
-      <input id="subject" name="subject" type="text" placeholder="How can we help?" required>
-      <span class="error" aria-live="polite"></span>
-    </div>
-    <div class="form-field form-field-full">
-      <label for="message">Message</label>
-      <textarea id="message" name="message" rows="6" placeholder="Describe your project or question..." required></textarea>
-      <span class="error" aria-live="polite"></span>
-    </div>
-  </div>
-  <div class="form-actions">
-    <button type="submit" class="btn btn-primary">Send message</button>
-    <p class="form-note">We’ll get back within 1 business day.</p>
-  </div>
-</form>
+<script>
+let currentInput = 'mobile';
+function toggleInput(type) {
+    currentInput = type;
+    if(type==='mobile') {
+        document.getElementById('mobileField').style.display='block';
+        document.getElementById('aadhaarField').style.display='none';
+        document.getElementById('mobileBtn').classList.add('active');
+        document.getElementById('aadhaarBtn').classList.remove('active');
+    } else {
+        document.getElementById('mobileField').style.display='none';
+        document.getElementById('aadhaarField').style.display='block';
+        document.getElementById('mobileBtn').classList.remove('active');
+        document.getElementById('aadhaarBtn').classList.add('active');
+    }
+}
 
-  <!-- Lightbox Modal -->
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Project image viewer">
-    <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
-    <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Previous image">←</button>
-    <img id="lightboxImg" alt="">
-    <button class="lightbox-nav next" id="lightboxNext" aria-label="Next image">→</button>
-  </div>
+window.onscroll = function() {
+    document.getElementById('toTop').style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? 'flex' : 'none';
+};
 
-  <!-- Back to top -->
-  <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
+function scrollToTop() {
+    document.getElementById('top').scrollIntoView({behavior: "smooth"});
+}
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <div class="brand-mini">
-          <span class="brand-logo" aria-hidden="true"></span>
-          <span><strong>EMBED IQ</strong></span>
-        </div>
-        <p>Embedded systems, digital circuits, CAD, mechanical design, testing, and soldering—delivered with care.</p>
-      </div>
-      <div>
-        <h4>Company</h4>
-        <ul class="footer-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact  +91 6303557146</a></li>
-          <li><a href="#mail">MAIL embediqinnovations@gmail.com</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Services</h4>
-        <ul class="footer-links">
-          <li><a href="#services">Embedded Projects</a></li>
-          <li><a href="#services">Digital Circuit Design</a></li>
-          <li><a href="#services">CAD Works (Electrical)</a></li>
-          <li><a href="#services">Mechanical Design CAD</a></li>
-          <li><a href="#services">Testing & Validation</a></li>
-          <li><a href="#services">Soldering & Assembly</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Follow</h4>
-        <ul class="footer-links">
-          <li><a href="#" aria-label="LinkedIn">LinkedIn</a></li>
-          <li><a href="#" aria-label="YouTube">YouTube</a></li>
-          <li><a href="#" aria-label="GitHub">GitHub</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© <span id="year"></span> EMBED IQ INNOVATIONS. All rights reserved.</p>
-    </div>
-  </footer>
+async function search() {
+    let mobile = document.getElementById('mobile').value.trim();
+    let aadhaar = document.getElementById('aadhaar').value.trim();
+    let output = document.getElementById('output');
+    output.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner"></i></div>';
+    let url = '';
 
-  <script src="script.js"></script>
-  <script src="server.js"></script>
+    if(currentInput==='mobile' && mobile.length===10 && /^\d{10}$/.test(mobile)) {
+        url = https://n2d.vercel.app/api?key=freeApi&number=${mobile};
+    } else if(currentInput==='aadhaar' && aadhaar.length===12 && /^\d{12}$/.test(aadhaar)) {
+        url = https://n2d.vercel.app/api?key=freeApi&aadhaar_number=${aadhaar};
+    } else {
+        output.innerHTML = '<div class="error-card">Please enter a valid number</div>';
+        return;
+    }
+
+    try {
+        let response = await fetch(url);
+        let data = await response.json();
+        if(data.status === "success") {
+            let html = '';
+            data.data.forEach(item => {
+                html += `<div class="result-card">
+                    <p><i class="fa-solid fa-user"></i><strong>Name:</strong> ${item.name}</p>
+                    <p><i class="fa-solid fa-user-pen"></i><strong>Father's Name:</strong> ${item.father_name}</p>
+                    <p><i class="fa-solid fa-phone"></i><strong>Mobile:</strong> ${item.mobile}</p>
+                    <p><i class="fa-solid fa-phone-volume"></i><strong>Alt Mobile:</strong> ${item.alt_mobile || 'N/A'}</p>
+                    <p><i class="fa-solid fa-signal"></i><strong>Circle:</strong> ${item.circle}</p>
+                    <p><i class="fa-solid fa-id-card"></i><strong>Aadhaar:</strong> ${item.aadhaar_number || 'N/A'}</p>
+                    <p><i class="fa-solid fa-location-dot"></i><strong>Address:</strong> ${item.address}</p>
+                    <p><i class="fa-solid fa-envelope"></i><strong>Email:</strong> ${item.email || 'N/A'}</p>
+                </div>`;
+            });
+            output.innerHTML = html;
+        } else {
+            output.innerHTML = <div class="error-card">${data.data[0].error}</div>;
+        }
+    } catch(err) {
+        output.innerHTML = <div class="error-card">Something went wrong. Try again later.</div>;
+    }
+}
+</script>
 </body>
 </html>
-
-
