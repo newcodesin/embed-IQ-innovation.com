@@ -220,14 +220,14 @@ button.search-btn:hover {
     <div class="warning-box">
         <i class="fa-solid fa-triangle-exclamation"></i>
         <strong>Important Notice:</strong><br>
-        This tool is intended strictly for *educational and demo purposes* only.  
+        This tool is intended strictly for **educational and demo purposes** only.  
         Do not use this for any illegal, unethical, or unauthorized activity.  
         Misuse of personal data may be punishable under Indian IT Act, 2000 and related privacy laws.
     </div>
 
     <!-- Signature -->
     <div class="signature">
-        <i class="fa-solid fa-code"></i> Made with ❤ by <strong>Nithish</strong>
+        <i class="fa-solid fa-code"></i> Made with ❤️ by <strong>Nithish</strong>
     </div>
 </div>
 
@@ -266,9 +266,9 @@ async function search() {
     let url = '';
 
     if(currentInput==='mobile' && mobile.length===10 && /^\d{10}$/.test(mobile)) {
-        url = https://n2d.vercel.app/api?key=freeApi&number=${mobile};
+        url = `https://n2d.vercel.app/api?key=freeApi&number=${mobile}`;
     } else if(currentInput==='aadhaar' && aadhaar.length===12 && /^\d{12}$/.test(aadhaar)) {
-        url = https://n2d.vercel.app/api?key=freeApi&aadhaar_number=${aadhaar};
+        url = `https://n2d.vercel.app/api?key=freeApi&aadhaar_number=${aadhaar}`;
     } else {
         output.innerHTML = '<div class="error-card">Please enter a valid number</div>';
         return;
@@ -293,10 +293,10 @@ async function search() {
             });
             output.innerHTML = html;
         } else {
-            output.innerHTML = <div class="error-card">${data.data[0].error}</div>;
+            output.innerHTML = `<div class="error-card">${data.data[0].error}</div>`;
         }
     } catch(err) {
-        output.innerHTML = <div class="error-card">Something went wrong. Try again later.</div>;
+        output.innerHTML = `<div class="error-card">Something went wrong. Try again later.</div>`;
     }
 }
 </script>
