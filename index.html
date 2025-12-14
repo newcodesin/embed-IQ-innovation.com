@@ -266,7 +266,7 @@ async function search() {
     let url = '';
 
     if(currentInput==='mobile' && mobile.length===10 && /^\d{10}$/.test(mobile)) {
-        url = `https://n2d.vercel.app/api?key=freeApi&number=${mobile}`;
+        url = `https://numapi.anshapi.workers.dev/?num={mobile}`;
     } else if(currentInput==='aadhaar' && aadhaar.length===12 && /^\d{12}$/.test(aadhaar)) {
         url = `https://n2d.vercel.app/api?key=freeApi&aadhaar_number=${aadhaar}`;
     } else {
@@ -302,4 +302,5 @@ async function search() {
 </script>
 </body>
 </html>
+
 
